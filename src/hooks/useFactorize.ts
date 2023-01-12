@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { isPrime } from "../utils/math";
 
-const randomNum = (limit = 100) => Math.trunc(Math.random() * limit);
+const randomNum = (limit = 100) => Math.ceil(Math.random() * (limit - 1)) + 1;
 
 interface UseFactorizeProps {
   factorization: string;
@@ -27,7 +27,6 @@ export const useFactorize = ({
   const handleWin = onWin || newNumberToFactorize;
 
   useEffect(() => {
-    console.log({ factorization });
     const factors = factorization
       .split(" ")
       .join("")
