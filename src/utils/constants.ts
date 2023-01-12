@@ -1,2 +1,3 @@
-export const LIMIT_FACTORIZE_TIME = 20000;
-export const LIMIT_PAUSE_TIME = 5000;
+export const BULLET_LIMIT_FACTORIZE_TIME = 20 * 1000;
+export const CLASSIC_LIMIT_FACTORIZE_TIME = 60 * 1000;
+export const LIMIT_PAUSE_TIME = 5 * 1000;

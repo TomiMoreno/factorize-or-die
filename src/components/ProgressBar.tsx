@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { LIMIT_FACTORIZE_TIME } from "../utils/constants";
+import { BULLET_LIMIT_FACTORIZE_TIME } from "../utils/constants";
 
 export default function ProgressBar({
-  timeToFill = LIMIT_FACTORIZE_TIME,
+  timeToFill = BULLET_LIMIT_FACTORIZE_TIME,
   fill = false,
 }) {
   const [fillBar, setFillBar] = useState(false);

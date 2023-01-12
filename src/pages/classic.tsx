@@ -1,48 +1,47 @@
 import React, { useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { useFactorize } from "../hooks/useFactorize";
-import { useNumberFact } from "../hooks/useNumbersFact";
-import { LIMIT_FACTORIZE_TIME } from "../utils/constants";
+import { CLASSIC_LIMIT_FACTORIZE_TIME } from "../utils/constants";
 import { Button } from "../components/Button";
 import { useTimeout } from "../hooks/useTimeout";
 import { useEffect } from "react";
 
-export default function Game() {
+export default function Classic() {
   const [status, setStatus] = useState<"playing" | "win" | "lose">("playing");
+  const [factorizedNumbers, setFactorizedNumbers] = useState(0);
   const [factorization, setFactorization] = useState("");
-  const { start, stop } = useTimeout(
+  const { start } = useTimeout(
     () => setStatus("lose"),
-    LIMIT_FACTORIZE_TIME
+    CLASSIC_LIMIT_FACTORIZE_TIME
   );
+
   const { numberToFactorize, newNumberToFactorize } = useFactorize({
     factorization,
     onWin: () => {
-      setStatus("win");
+      setFactorizedNumbers(
+        (prevFactorizedNumbers) => prevFactorizedNumbers + 1
+      );
       setFactorization("");
+      newNumberToFactorize();
     },
   });
-  const fact = " " + useNumberFact(numberToFactorize) + " ";
-  const splittedFact = fact.split(` ${numberToFactorize.toString()} `);
 
-  const tryAgain = () => {
+  const playAgain = () => {
     setFactorization("");
-    newNumberToFactorize();
-    setStatus("playing");
-  };
-
-  const next = () => {
     newNumberToFactorize();
     setStatus("playing");
   };
 
   useEffect(() => {
     if (status === "playing") start();
-    if (status === "win") stop();
   }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <ProgressBar fill={status === "playing"} />
+      <ProgressBar
+        timeToFill={CLASSIC_LIMIT_FACTORIZE_TIME}
+        fill={status === "playing"}
+      />
       {status === "playing" && (
         <div className="flex flex-col items-center justify-center">
           <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
@@ -55,27 +54,12 @@ export default function Game() {
           />
         </div>
       )}
-      {status === "win" && (
-        <div className="flex flex-col items-center gap-5">
-          <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[4rem]">
-            {splittedFact.map((currentLine, index) => (
-              <>
-                {currentLine}
-                {index < splittedFact.length - 1 && (
-                  <span className="text-red-700">{` ${numberToFactorize} `}</span>
-                )}
-              </>
-            ))}
-          </h2>
-          <Button onClick={next}>Next</Button>
-        </div>
-      )}
       {status === "lose" && (
         <div className="flex flex-col items-center gap-5">
           <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[4rem]">
-            You lose
+            you factorize {factorizedNumbers} numbers!
           </h2>
-          <Button onClick={tryAgain}>Try Again</Button>
+          <Button onClick={playAgain}>play again</Button>
         </div>
       )}
     </div>

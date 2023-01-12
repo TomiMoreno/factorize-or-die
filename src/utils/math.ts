@@ -36,3 +36,19 @@ export const calculatePrimesUpTo = (limit: number) => {
 
   return primes;
 };
+
+export const getFactors = (n: number) => {
+  const factors: number[] = [];
+  let actual = n;
+  if (isPrime(n)) return [n];
+  calculatePrimesUpTo(n);
+  for (const prime of primes) {
+    while (actual % prime === 0) {
+      actual = actual / prime;
+      factors.push(prime);
+    }
+    if (actual === 1) break;
+  }
+
+  return factors;
+};

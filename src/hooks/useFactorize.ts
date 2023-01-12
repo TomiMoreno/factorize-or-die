@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useEffect, useState, useCallback } from "react";
-import { isPrime } from "../utils/math";
+import { isPrime, getFactors } from "../utils/math";
 
 const randomNum = (limit = 100) => Math.ceil(Math.random() * (limit - 1)) + 1;
 
@@ -13,6 +13,9 @@ export const useFactorize = ({
   onWin,
 }: UseFactorizeProps) => {
   const [numberToFactorize, setNumberToFactorize] = useState(randomNum);
+  const [factors, setFactors] = useState<number[]>(() =>
+    getFactors(numberToFactorize)
+  );
 
   const newNumberToFactorize = useCallback(() => {
     setNumberToFactorize((prevNumber) => {
@@ -20,6 +23,8 @@ export const useFactorize = ({
       while (newNumber === prevNumber) {
         newNumber = randomNum();
       }
+
+      setFactors(getFactors(newNumber));
       return newNumber;
     });
   }, []);
@@ -47,5 +52,6 @@ export const useFactorize = ({
   return {
     numberToFactorize,
     newNumberToFactorize,
+    factors,
   };
 };
