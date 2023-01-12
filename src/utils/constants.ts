@@ -1,0 +1,2 @@
+export const LIMIT_FACTORIZE_TIME = 20000;
+export const LIMIT_PAUSE_TIME = 5000;
