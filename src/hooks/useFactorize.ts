@@ -38,6 +38,13 @@ export const useFactorize = ({
       .split("*")
       .map((factor) => parseInt(factor));
 
+    if (
+      factors.some(
+        (factor) => !Number.isInteger(factor) || factor > numberToFactorize
+      )
+    ) {
+      return;
+    }
     const areFactorsPrime = factors.every(isPrime);
     if (!areFactorsPrime) {
       return;
