@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFactorize } from "../hooks/useFactorize";
 import { Button } from "../components/Button";
 import { useNumberFact } from "../hooks/useNumbersFact";
+import Keyboard from "../components/Keyboard";
 
 export default function Free() {
   const [status, setStatus] = useState<"playing" | "win">("playing");
@@ -32,6 +33,19 @@ export default function Free() {
             value={factorization}
             onChange={(e) => setFactorization(e.target.value)}
             className="border-b-2 border-gray-700 text-5xl font-extrabold leading-normal text-gray-700 focus:border-red-700 focus:outline-none md:text-[5rem]"
+          />
+          <Keyboard
+            onKeyPress={(key) => {
+              if (key === "🤏") {
+                setFactorization((prevFactorization) =>
+                  prevFactorization.slice(0, -1)
+                );
+              } else {
+                setFactorization(
+                  (prevFactorization) => `${prevFactorization}${key}`
+                );
+              }
+            }}
           />
         </div>
       )}

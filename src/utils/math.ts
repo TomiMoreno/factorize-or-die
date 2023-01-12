@@ -1,4 +1,5 @@
-const primes: number[] = [2, 3];
+import { PRIMES_UP_TO_100 } from "./constants";
+const primes: number[] = [...PRIMES_UP_TO_100];
 
 export function isPrime(n: number): boolean {
   if (Number.isNaN(n)) return false;

@@ -5,6 +5,7 @@ import { CLASSIC_LIMIT_FACTORIZE_TIME } from "../utils/constants";
 import { Button } from "../components/Button";
 import { useTimeout } from "../hooks/useTimeout";
 import { useEffect } from "react";
+import Keyboard from "../components/Keyboard";
 
 export default function Classic() {
   const [status, setStatus] = useState<"playing" | "win" | "lose">("playing");
@@ -51,6 +52,19 @@ export default function Classic() {
             value={factorization}
             onChange={(e) => setFactorization(e.target.value)}
             className="border-b-2 border-gray-700 text-5xl font-extrabold leading-normal text-gray-700 focus:border-red-700 focus:outline-none md:text-[5rem]"
+          />
+          <Keyboard
+            onKeyPress={(key) => {
+              if (key === "🤏") {
+                setFactorization((prevFactorization) =>
+                  prevFactorization.slice(0, -1)
+                );
+              } else {
+                setFactorization(
+                  (prevFactorization) => `${prevFactorization}${key}`
+                );
+              }
+            }}
           />
         </div>
       )}
