@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -17,11 +18,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
           {pathname === "/free" ? (
             <span>
-              Factorize and <span className="text-green-700">Chill</span>
+              Factorize and{" "}
+              <Link href="./">
+                <span className="cursor-pointer text-green-700 underline">
+                  Chill
+                </span>
+              </Link>
             </span>
           ) : (
             <span>
-              Factorize or <span className="text-red-700">DIE</span>
+              Factorize or{" "}
+              <Link href="./">
+                <span className="cursor-pointer text-red-700 underline">
+                  DIE
+                </span>
+              </Link>
             </span>
           )}
         </h1>

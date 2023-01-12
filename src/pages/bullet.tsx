@@ -29,6 +29,7 @@ export default function Bullet() {
   };
 
   const next = () => {
+    setFactorization("");
     newNumberToFactorize();
     setStatus("playing");
   };

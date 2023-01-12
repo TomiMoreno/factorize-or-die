@@ -7,7 +7,9 @@ export default function ProgressBar({
 }) {
   const [fillBar, setFillBar] = useState(false);
   useEffect(() => {
-    setFillBar(fill);
+    setTimeout(() => {
+      setFillBar(fill);
+    }, 0);
   }, [fill]);
 
   return (
