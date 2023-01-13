@@ -56,3 +56,16 @@ export const getFactors = (n: number) => {
 
 export const randomNum = (limit = 100) =>
   Math.ceil(Math.random() * (limit - 1)) + 1;
+
+export const elevateFromString = (input: string): [number, number] => {
+  const indexOfSymbol = input.indexOf("^");
+
+  const base = Number(input.slice(0, indexOfSymbol));
+  const exponent = input.slice(indexOfSymbol + 1);
+  if (exponent.includes("^")) {
+    const [newBase, newExponent] = elevateFromString(exponent);
+    return [base, newBase ** newExponent];
+  }
+  return [base, Number(exponent)];
+};
+// [n, e, n2, e2 ]

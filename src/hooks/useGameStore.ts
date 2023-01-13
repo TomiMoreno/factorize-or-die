@@ -1,7 +1,12 @@
 import { create } from "zustand";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import { subscribeWithSelector } from "zustand/middleware";
-import { getFactors, isPrime, randomNum } from "../utils/math";
+import {
+  elevateFromString,
+  getFactors,
+  isPrime,
+  randomNum,
+} from "../utils/math";
 import { gameStatuses, gameModes } from "../utils/types";
 import { DEFAULT_FACT } from "../utils/constants";
 
@@ -40,11 +45,20 @@ export const useGameStore = create(
     };
 
     const checkWin = (input: string, numberToFactorize: number) => {
+      const exponents: number[] = [];
       const factors = input
-        .split(" ")
-        .join("")
+        .replace("**", "^")
         .split("*")
-        .map((factor) => parseInt(factor));
+        .map((factor) => {
+          if (factor.includes("^")) {
+            const [base, exponent] = elevateFromString(factor);
+            exponents.push(exponent);
+            return base;
+          } else {
+            exponents.push(1);
+            return parseInt(factor);
+          }
+        });
 
       // Validations
       if (
@@ -59,9 +73,10 @@ export const useGameStore = create(
         return false;
       }
       const multipliedFactors = factors.reduce(
-        (acc, factor) => acc * factor,
+        (acc, factor, i) => acc * Math.pow(factor, exponents[i] ?? 1),
         1
       );
+
       return multipliedFactors === numberToFactorize;
     };
 
@@ -132,15 +147,6 @@ useGameStore.subscribe(
         numberToFactorize: randomNum(),
       });
     }
-  }
-);
-
-useGameStore.subscribe(
-  (state) => state.gameStatus,
-  (gameStatus) => {
-    // if (gameStatus === gameStatuses.lost) {
-    //   useGameStore.setState({});
-    // }
   }
 );
 

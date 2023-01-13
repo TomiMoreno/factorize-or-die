@@ -43,11 +43,11 @@ export default function Tutorial() {
         </div>
         <p className="mb-4 text-lg">
           The format for the answers is a multiplication of prime numbers using
-          the * character.{" "}
+          (*) or (**) character for exponents.
         </p>
         <p className="mb-4 text-lg">
           For example, if the number is 12, the answer would be
-          &quot;2*2*3&quot;.{" "}
+          &quot;2*2*3&quot;. Or &quot;2**2*3&quot; if you want to use exponents
         </p>
         <Link href="/">
           <Button>Start Playing</Button>
