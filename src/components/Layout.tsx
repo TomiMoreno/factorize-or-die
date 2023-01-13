@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-start p-4">
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-start p-4 text-center">
         <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
           {pathname === "/free" ? (
             <span>

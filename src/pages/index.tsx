@@ -20,6 +20,11 @@ const Home: NextPage = () => {
             Classic
           </a>
         </Link>
+        <Link href="/tutorial">
+          <a className="text-4xl font-bold text-red-700 hover:text-red-900">
+            Tutorial
+          </a>
+        </Link>
       </div>
     </main>
   );
