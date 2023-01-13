@@ -25,26 +25,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-start p-4 text-center">
-        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
+      <main className="container mx-auto flex min-h-screen w-full flex-col items-center justify-start p-4 text-center">
+        {pathname !== "/" && (
+          <Link href="/">
+            <a className="absolute top-8 left-2 text-2xl font-bold leading-normal text-gray-700 transition-colors hover:text-gray-900">
+              ⬅️
+            </a>
+          </Link>
+        )}
+        <h1 className="mx-4 text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
           {pathname === "/free" ? (
-            <span>
-              Factorize and{" "}
-              <Link href="./">
-                <span className="cursor-pointer text-green-700 underline">
-                  Chill
-                </span>
-              </Link>
-            </span>
-          ) : (
-            <span>
+            <>
               Factorize or{" "}
-              <Link href="./">
-                <span className="cursor-pointer text-red-700 underline">
-                  DIE
-                </span>
-              </Link>
-            </span>
+              <span className="cursor-pointer text-green-700 underline">
+                Chill
+              </span>
+            </>
+          ) : (
+            <>
+              Factorize or{" "}
+              <span className="cursor-pointer text-red-700 underline">DIE</span>
+            </>
           )}
         </h1>
         {children}
