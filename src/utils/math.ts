@@ -53,3 +53,6 @@ export const getFactors = (n: number) => {
 
   return factors;
 };
+
+export const randomNum = (limit = 100) =>
+  Math.ceil(Math.random() * (limit - 1)) + 1;

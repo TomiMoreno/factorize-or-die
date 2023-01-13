@@ -1,65 +1,27 @@
-import React, { useState } from "react";
-import { useFactorize } from "../hooks/useFactorize";
+import React from "react";
 import { Button } from "../components/Button";
-import { useNumberFact } from "../hooks/useNumbersFact";
-import Keyboard from "../components/Keyboard";
+import FactorizationInput from "../components/FactorizationInput";
+import { useFreeMode } from "../hooks/useFreeMode";
+import Fact from "../components/Fact";
+import { gameStatuses } from "../utils/types";
 
 export default function Free() {
-  const [status, setStatus] = useState<"playing" | "win">("playing");
-  const [factorization, setFactorization] = useState("");
-  const { numberToFactorize, newNumberToFactorize } = useFactorize({
-    factorization,
-    onWin: () => {
-      setStatus("win");
-    },
-  });
-  const fact = " " + useNumberFact(numberToFactorize) + " ";
-  const splittedFact = fact.split(` ${numberToFactorize.toString()} `);
-
-  const next = () => {
-    setFactorization("");
-    newNumberToFactorize();
-    setStatus("playing");
-  };
+  const { numberToFactorize, fact, next, gameStatus } = useFreeMode();
 
   return (
     <div className="flex flex-col items-center justify-center">
-      {status === "playing" && (
+      {gameStatus === gameStatuses.playing && (
         <div className="flex flex-col items-center justify-center">
           <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
             {numberToFactorize}
           </h2>
-          <input
-            value={factorization}
-            onChange={(e) => setFactorization(e.target.value)}
-            className="border-b-2 border-gray-700 text-5xl font-extrabold leading-normal text-gray-700 focus:border-red-700 focus:outline-none md:text-[5rem]"
-          />
-          <Keyboard
-            onKeyPress={(key) => {
-              if (key === "🤏") {
-                setFactorization((prevFactorization) =>
-                  prevFactorization.slice(0, -1)
-                );
-              } else {
-                setFactorization(
-                  (prevFactorization) => `${prevFactorization}${key}`
-                );
-              }
-            }}
-          />
+          <FactorizationInput />
         </div>
       )}
-      {status === "win" && (
+      {gameStatus === gameStatuses.won && (
         <div className="flex flex-col items-center gap-5">
           <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[4rem]">
-            {splittedFact.map((currentLine, index) => (
-              <>
-                {currentLine}
-                {index < splittedFact.length - 1 && (
-                  <span className="text-red-700">{` ${numberToFactorize} `}</span>
-                )}
-              </>
-            ))}
+            <Fact fact={fact} />
           </h2>{" "}
           <Button onClick={next}>Next</Button>
         </div>

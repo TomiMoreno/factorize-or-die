@@ -1,13 +1,10 @@
 import React from "react";
-import { useNumberFact } from "../hooks/useNumbersFact";
+import { useGameStore } from "../hooks/useGameStore";
 
-export default function Fact({
-  numberToFactorize,
-}: {
-  numberToFactorize: number;
-}) {
-  const fact = " " + useNumberFact(numberToFactorize) + " ";
-  const splittedFact = fact.split(` ${numberToFactorize.toString()} `);
+export default function Fact({ fact }: { fact: string }) {
+  const formattedFact = " " + fact + " ";
+  const numberToFactorize = useGameStore((state) => state.numberToFactorize);
+  const splittedFact = formattedFact.split(` ${numberToFactorize.toString()} `);
   return (
     <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[4rem]">
       {splittedFact.map((currentLine, index) => (

@@ -2,9 +2,20 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useEffect } from "react";
+import { useGameStore } from "../hooks/useGameStore";
+import { gameModes } from "../utils/types";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { pathname } = useRouter();
+  const setGameMode = useGameStore((state) => state.setGameMode);
+
+  useEffect(() => {
+    if (pathname === "/classic") setGameMode(gameModes.classic);
+    else if (pathname === "/free") setGameMode(gameModes.free);
+    else if (pathname === "/bullet") setGameMode(gameModes.bullet);
+    else setGameMode(gameModes.none);
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
