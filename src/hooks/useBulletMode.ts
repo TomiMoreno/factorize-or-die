@@ -1,4 +1,4 @@
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import { useEffect } from "react";
 import { BULLET_LIMIT_FACTORIZE_TIME } from "../utils/constants";
 import { gameStatuses } from "../utils/types";

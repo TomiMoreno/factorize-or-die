@@ -1,6 +1,6 @@
 import { gameStatuses } from "../utils/types";
 import { useGameStore } from "./useGameStore";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import { useTimeout } from "./useTimeout";
 import { CLASSIC_LIMIT_FACTORIZE_TIME } from "../utils/constants";
 import { useEffect } from "react";

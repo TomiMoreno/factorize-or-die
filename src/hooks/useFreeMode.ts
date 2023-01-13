@@ -1,7 +1,7 @@
 import { gameStatuses } from "../utils/types";
 import { useGameStore } from "./useGameStore";
 import { useNumberFact } from "./useNumbersFact";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 /* eslint-disable @typescript-eslint/no-empty-function */
 export const useFreeMode = () => {
