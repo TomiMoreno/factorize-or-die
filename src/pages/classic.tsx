@@ -5,6 +5,7 @@ import { Button } from "../components/Button";
 import { useClassicMode } from "../hooks/useClassicMode";
 import { gameStatuses } from "../utils/types";
 import FactorizationInput from "../components/FactorizationInput";
+import Keyboard from "../components/Keyboard";
 
 export default function Classic() {
   const { gameStatus, numberToFactorize, playAgain, factorizedNumbers } =
@@ -22,6 +23,7 @@ export default function Classic() {
             {numberToFactorize}
           </h2>
           <FactorizationInput />
+          <Keyboard />
         </div>
       )}
       {gameStatus === gameStatuses.lost && (

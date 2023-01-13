@@ -5,9 +5,10 @@ import { Button } from "../components/Button";
 import Fact from "../components/Fact";
 import FactorizationInput from "../components/FactorizationInput";
 import { gameStatuses } from "../utils/types";
+import Keyboard from "../components/Keyboard";
 
 export default function Bullet() {
-  const { numberToFactorize, fact, next, tryAgain, factors, gameStatus } =
+  const { numberToFactorize, next, tryAgain, factors, gameStatus } =
     useBulletMode();
 
   return (
@@ -19,12 +20,13 @@ export default function Bullet() {
             {numberToFactorize}
           </h2>
           <FactorizationInput />
+          <Keyboard />
         </div>
       )}
       {gameStatus === gameStatuses.won && (
         <div className="flex flex-col items-center gap-5">
           <h2 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[4rem]">
-            <Fact fact={fact} />
+            <Fact />
           </h2>
           <Button onClick={next}>Next</Button>
         </div>
