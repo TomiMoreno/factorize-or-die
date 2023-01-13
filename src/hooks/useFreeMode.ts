@@ -1,6 +1,5 @@
 import { gameStatuses } from "../utils/types";
 import { useGameStore } from "./useGameStore";
-import { useNumberFact } from "./useNumbersFact";
 import { shallow } from "zustand/shallow";
 
 /* eslint-disable @typescript-eslint/no-empty-function */
@@ -15,7 +14,6 @@ export const useFreeMode = () => {
       }),
       shallow
     );
-  const fact = useNumberFact();
 
   const next = () => {
     setGameStatus(gameStatuses.playing);
@@ -26,6 +24,5 @@ export const useFreeMode = () => {
     gameStatus,
     next,
     numberToFactorize,
-    fact,
   };
 };

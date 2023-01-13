@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { BULLET_LIMIT_FACTORIZE_TIME } from "../utils/constants";
 import { gameStatuses } from "../utils/types";
 import { useGameStore } from "./useGameStore";
-import { useNumberFact } from "./useNumbersFact";
 import { useTimeout } from "./useTimeout";
 
 /* eslint-disable @typescript-eslint/no-empty-function */
@@ -24,7 +23,6 @@ export const useBulletMode = () => {
     }),
     shallow
   );
-  const fact = useNumberFact();
   const { start, stop } = useTimeout(
     () => setGameStatus(gameStatuses.lost),
     BULLET_LIMIT_FACTORIZE_TIME
@@ -55,6 +53,5 @@ export const useBulletMode = () => {
     next,
     numberToFactorize,
     factors,
-    fact,
   };
 };

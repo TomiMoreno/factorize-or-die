@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { DEFAULT_FACT } from "../../../utils/constants";
 const NUMBERS_API_URL = "http://numbersapi.com";
-const DEFAULT_FACT = "1 is not prime";
 
 export default async function handler(
   req: NextApiRequest,

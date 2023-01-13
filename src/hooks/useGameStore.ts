@@ -1,12 +1,16 @@
 import { create } from "zustand";
+import shallow from "zustand/shallow";
 import { subscribeWithSelector } from "zustand/middleware";
 import { getFactors, isPrime, randomNum } from "../utils/math";
 import { gameStatuses, gameModes } from "../utils/types";
+import { DEFAULT_FACT } from "../utils/constants";
 
 interface GameState {
   numberToFactorize: number;
   factors: number[];
   factorizedNumbers: number;
+  fact: string;
+  setFact: (text: string) => void;
   setFactorizedNumbers: (number: number) => void;
   setNumberToFactorize: (number: number) => void;
   newNumberToFactorize: () => void;
@@ -22,11 +26,6 @@ interface GameState {
 
 export const useGameStore = create(
   subscribeWithSelector<GameState>((set) => {
-    const setNumberToFactorize = (number: number) =>
-      set({
-        numberToFactorize: number,
-      });
-
     const newNumberToFactorize = () => {
       set(({ numberToFactorize: prevNumber, factorizedNumbers }) => {
         let newNumber = prevNumber;
@@ -67,15 +66,15 @@ export const useGameStore = create(
     };
 
     return {
-      numberToFactorize: randomNum(),
-      factors: [],
       factorizedInput: "",
-      gameStatus: gameStatuses.playing,
-      gameMode: gameModes.none,
-      timeToLose: 0,
+      fact: DEFAULT_FACT,
       factorizedNumbers: 0,
-      setNumberToFactorize,
+      factors: [],
+      gameMode: gameModes.none,
+      gameStatus: gameStatuses.playing,
       newNumberToFactorize,
+      numberToFactorize: randomNum(),
+      setFact: (text) => set({ fact: text }),
       setFactorizedInput: (factorizedInput) => {
         set(({ numberToFactorize, gameStatus }) => {
           const hasWon = checkWin(factorizedInput, numberToFactorize);
@@ -85,10 +84,27 @@ export const useGameStore = create(
           };
         });
       },
-      setGameStatus: (status) => set({ gameStatus: status }),
-      setGameMode: (mode) => set({ gameMode: mode }),
-      setTimeToLose: (time) => set({ timeToLose: time }),
-      setFactorizedNumbers: (number) => set({ factorizedNumbers: number }),
+      setFactorizedNumbers: (number) =>
+        set({
+          factorizedNumbers: number,
+        }),
+      setGameMode: (mode) =>
+        set({
+          gameMode: mode,
+        }),
+      setGameStatus: (status) =>
+        set({
+          gameStatus: status,
+        }),
+      setNumberToFactorize: (number: number) =>
+        set({
+          numberToFactorize: number,
+        }),
+      setTimeToLose: (time) =>
+        set({
+          timeToLose: time,
+        }),
+      timeToLose: 0,
     };
   })
 );
@@ -111,9 +127,9 @@ useGameStore.subscribe(
   (gameMode) => {
     if (gameMode !== gameModes.none) {
       useGameStore.setState({
-        numberToFactorize: randomNum(),
-        gameStatus: gameStatuses.playing,
         factorizedNumbers: 0,
+        gameStatus: gameStatuses.playing,
+        numberToFactorize: randomNum(),
       });
     }
   }
@@ -125,5 +141,29 @@ useGameStore.subscribe(
     // if (gameStatus === gameStatuses.lost) {
     //   useGameStore.setState({});
     // }
+  }
+);
+
+// get fact of numberToFactorize
+useGameStore.subscribe(
+  (state) => [state.numberToFactorize, state.gameMode],
+  ([numberToFactorize, gameMode]) => {
+    if (!(gameMode === gameModes.bullet || gameMode === gameModes.free)) return;
+    fetch(`/api/fact/${numberToFactorize}`)
+      .then((res) => res.json())
+      .then(({ fact }) => {
+        useGameStore.setState({
+          fact,
+        });
+      })
+      .catch(() => {
+        useGameStore.setState({
+          fact: DEFAULT_FACT,
+        });
+      });
+  },
+  {
+    equalityFn: shallow,
+    fireImmediately: true,
   }
 );
