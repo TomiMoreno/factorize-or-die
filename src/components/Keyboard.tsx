@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useGameStore } from "../hooks/useGameStore";
 import { shallow } from "zustand/shallow";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] as const;
 const OPERATORS = ["*", "⌫"] as const;
@@ -17,7 +18,10 @@ export default function Keyboard() {
     shallow
   );
   const isMobile = useIsMobile();
-  const [showKeyboard, setShowKeyboard] = useState(() => isMobile);
+  const [showKeyboard, setShowKeyboard] = useLocalStorage(
+    "showKeyboard",
+    isMobile
+  );
   const handleKeyPress =
     (key: Key): React.MouseEventHandler<HTMLButtonElement> =>
     () => {
@@ -61,7 +65,7 @@ export default function Keyboard() {
           </>
         )}
         <button
-          onClick={() => setShowKeyboard((curr) => !curr)}
+          onClick={() => setShowKeyboard((prev) => !prev)}
           // only should be fixed on large screens
           className=" bottom-5 right-5 mx-auto rounded p-2 text-center text-3xl font-bold leading-normal transition-colors hover:bg-gray-100 lg:fixed"
         >

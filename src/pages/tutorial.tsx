@@ -46,8 +46,13 @@ export default function Tutorial() {
           (*) or (**) character for exponents.
         </p>
         <p className="mb-4 text-lg">
-          For example, if the number is 12, the answer would be
-          &quot;2*2*3&quot;. Or &quot;2**2*3&quot; if you want to use exponents
+          For example, if the number is 12, the answer would be{" "}
+          <code className="rounded bg-gray-200 text-red-800">2*2*3</code> or{" "}
+          <code className="rounded bg-gray-200 text-red-800">2**2*3</code> if
+          you want to use exponents.
+        </p>
+        <p className="mb-4 text-lg">
+          You can also enter the (*) character by pressing the spacebar
         </p>
         <Link href="/">
           <Button>Start Playing</Button>
