@@ -33,7 +33,7 @@ export const useGameStore = create(
   subscribeWithSelector<GameState>((set) => {
     const newNumberToFactorize = () => {
       set(({ numberToFactorize: prevNumber, factorizedNumbers }) => {
-        let newNumber = prevNumber;
+        let newNumber: number = prevNumber;
         while (newNumber === prevNumber) {
           newNumber = randomNum();
         }
@@ -47,7 +47,7 @@ export const useGameStore = create(
     const checkWin = (input: string, numberToFactorize: number) => {
       const exponents: number[] = [];
       const factors = input
-        .replace("**", "^")
+        .replaceAll("**", "^")
         .split("*")
         .map((factor) => {
           if (factor.includes("^")) {
@@ -59,7 +59,7 @@ export const useGameStore = create(
             return parseInt(factor);
           }
         });
-
+      console.log({ factors, exponents });
       // Validations
       if (
         factors.some(
@@ -76,7 +76,7 @@ export const useGameStore = create(
         (acc, factor, i) => acc * Math.pow(factor, exponents[i] ?? 1),
         1
       );
-
+      console.log({ multipliedFactors });
       return multipliedFactors === numberToFactorize;
     };
 
